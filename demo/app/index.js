@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 import { HashRouter as Router, Route, Link, withRouter } from 'react-router-dom'
 
 const demos = {
-  main: require('./demo-main').default,
+  main: require('./demo-controlled-select').default,
   performance: require('./demo-performance').default,
   treeGroups: require('./demo-tree-groups').default,
   linkedTimelines: require('./demo-linked-timelines').default,

@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import React, { Component } from 'react'
 import moment from 'moment'
+import Form from "./Form";
 
 import Timeline, {
   TimelineMarkers,
@@ -53,6 +54,7 @@ export default class App extends Component {
       defaultTimeStart,
       defaultTimeEnd,
       selected: undefined,
+      opened: false
     }
   }
 
@@ -76,15 +78,29 @@ export default class App extends Component {
     this.setState({
       selected: [itemId]
     })
+    const { opened } = this.state;
+
+    this.setState((prevState) => ({
+      opened: true
+    }));
     console.log('Selected: ' + itemId, moment(time).format())
   }
 
   handleItemDeselect = () => {
     this.setState({selected: undefined})
+    const { opened } = this.state;
+    this.setState((prevState) => ({
+      opened: false
+    }));
   }
 
   handleItemDoubleClick = (itemId, _, time) => {
-    console.log('Double Click: ' + itemId, moment(time).format())
+    this.setState({
+      selected: [itemId]
+    })
+    console.log(itemId);
+    console.log(this.state.items[itemId]);
+    console.log('Double Click: test' + itemId, moment(time).format())
   }
 
   handleItemContextMenu = (itemId, _, time) => {
@@ -157,6 +173,7 @@ export default class App extends Component {
     const { groups, items, defaultTimeStart, defaultTimeEnd } = this.state
 
     return (
+      <>
       <Timeline
         groups={groups}
         items={items}
@@ -209,6 +226,8 @@ export default class App extends Component {
           <CursorMarker />
         </TimelineMarkers>
       </Timeline>
+      {this.state.opened ? <Form items={items[this.state.selected]}/> : ""}
+      </>
     )
   }
 }
